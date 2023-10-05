@@ -5,6 +5,7 @@ import Appbar from "./components/AppBar.tsx";
 import Searchbar from "./components/SearchBar.tsx";
 import DataGridComponent from "./components/DataGridComponent.tsx";
 import { RecoilRoot } from "recoil";
+import ErrorHandlingComponent from "./components/ErrorHandlingComponent.tsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
               element={
                 <>
                   <Searchbar></Searchbar>
+                  <ErrorHandlingComponent />
                   <DataGridComponent />
                 </>
               }

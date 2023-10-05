@@ -1,41 +1,58 @@
 import { TextareaAutosize, Button } from "@mui/material";
 import axios from "axios";
 import styles from "../css/Searchbar.module.css";
-import { useSetRecoilState } from "recoil";
-import { tableDataAtom } from "../store/atoms/DataGridState.tsx";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import {
+  tableDataAtom,
+  urlErrorStateAtom,
+} from "../store/atoms/DataGridState.tsx";
 
 function Searchbar() {
   const SERVER_ENDPOINT = "http://localhost:3001/cruxdata";
   const setTableData = useSetRecoilState(tableDataAtom);
+  const setUrlErrors = useSetRecoilState(urlErrorStateAtom);
+  //const errors = useRecoilValue(urlErrorStateAtom);
 
   let textareaContent = "";
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
+    // Clearing previous state
+    setUrlErrors({});
+    setTableData([]);
+
     const urls = Array.from(
       new Set(
         textareaContent.split("\n").filter((url: string) => url.trim() !== "")
       )
     );
 
-    const fetchData = urls.map((url: string) => {
-      return axios.get(SERVER_ENDPOINT, {
-        params: {
-          url: url.trim(),
-        },
-      });
+    const fetchData = urls.map(async (url: string) => {
+      try {
+        const response = await axios.get(SERVER_ENDPOINT, {
+          params: {
+            url: url.trim(),
+          },
+        });
+        return response.data;
+      } catch (error) {
+        setUrlErrors((prevErrors) => ({
+          ...prevErrors,
+          [url]: "Failed to fetch data for this URL. Error :" + error,
+        }));
+        return null;
+      }
     });
 
-    Promise.all(fetchData).then((responses) => {
-      setTableData(
-        responses.map((res) => {
-          // Convert p75 values to numbers
-          Object.keys(res.data.metrics).forEach((key) => {
-            res.data.metrics[key].p75 = res.data.metrics[key].p75.map(Number);
-          });
-          return { id: res.data.origin, ...res.data };
-        })
-      );
-    });
+    const responses = await Promise.all(fetchData);
+
+    const validResponses = responses.filter((res) => res !== null);
+
+    setTableData(
+      validResponses.map((res) => ({
+        id: res.origin,
+        ...res,
+      }))
+    );
   };
 
   return (

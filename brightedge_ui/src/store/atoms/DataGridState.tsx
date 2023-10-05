@@ -5,7 +5,7 @@ export const tableDataAtom = atom<any[]>({
   default: [], // default value (aka initial value)
 });
 
-export const urlErrorState = atom({
+export const urlErrorStateAtom = atom({
   key: "urlErrors",
   default: {},
 });
