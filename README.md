@@ -130,12 +130,8 @@ The server is set up to handle global unhandled promise rejections and uncaught 
 - **p75 Metric**: Represents 75th percentile value.
 - **Histogram Metric**: Represents distribution of a dataset.
 
-### Recommendations for Table Display:
-
-Prioritize the following metrics for a non-technical audience:
+### What we are using for Table Display:
 
 - **FCP and LCP** for load performance.
 - **FID** for responsiveness.
 - **CLS** for visual stability.
-
-Display average values or percentiles for a clear performance view.
