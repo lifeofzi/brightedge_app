@@ -82,37 +82,10 @@ This will start the frontend development server, typically accessible at (http:/
 
 The server provides a set of API endpoints to interact with the CrUX data and manage the metrics.
 
-### 1. Fetch CrUX Data
-
-**Endpoint**: `/cruxdata`
-
-**Method**: `GET`
-
-**Parameters**:
-
-- `url`: The target URL for which CrUX data is to be retrieved.
-
-**Description**:
-
-This endpoint fetches and processes the raw CrUX data for the given URL, focusing primarily on metrics such as FCP, LCP, FID, and CLS.
-
-**Usage**:
-
-`GET /cruxdata?url=https://example.com`
-
-### 2. Fetch Metrics Mapping
-
-**Endpoint**: `/metrics`
-
-**Method**: `GET`
-
-**Description**:
-
-This endpoint provides the mapping of metric names to their respective short names.
-
-**Usage**:
-
-`GET /metrics`
+| Endpoint    | Method | Parameters                                 | Description                                                                                                 | Usage Example                           |
+| ----------- | ------ | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| `/cruxdata` | `GET`  | `url`: Target URL for CrUX data retrieval. | Fetches and processes the raw CrUX data for the given URL, focusing on metrics like FCP, LCP, FID, and CLS. | `GET /cruxdata?url=https://example.com` |
+| `/metrics`  | `GET`  | None                                       | Provides the mapping of metric names to their respective short names.                                       | `GET /metrics`                          |
 
 ### Server Setup
 
