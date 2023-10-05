@@ -135,3 +135,19 @@ The server is set up to handle global unhandled promise rejections and uncaught 
 - **FCP and LCP** for load performance.
 - **FID** for responsiveness.
 - **CLS** for visual stability.
+
+## Future Scope
+
+### Enhancements and New Features:
+
+1. **Backend Configurable Metrics**:
+   In the future, we aim to provide an API for the backend server which allows dynamic configuration of metrics. This will enable users to choose and modify the metrics they want to retrieve without having to make code changes.
+
+2. **Rich UI Components**:
+   The integration of modern components, such as charts, will enhance data visualization capabilities. Users will benefit from viewing metrics trends over time, making the data more interpretable and actionable.
+
+3. **User Accounts**:
+   Implementation of a user authentication system will allow users to sign up and log in. With this system in place, users can save templates specifying which URLs they wish to query. This will streamline repeated tasks and offer a more personalized experience.
+
+4. **Data Export Functionality**:
+   Users should have the flexibility to export the metrics data to different file formats, enabling further analysis or sharing with other platforms and tools.
