@@ -25,16 +25,18 @@ function ErrorHandlingComponent() {
 
   return (
     <div className={styles.container}>
-      {Object.entries(errors).map(([url, error]) => (
-        <Alert
-          key={url}
-          variant="outlined"
-          severity="error"
-          className={styles.errorMessage}
-        >
-          {`${url}: ${getErrorMessage(error)}`}
-        </Alert>
-      ))}
+      <Alert
+        variant="outlined"
+        severity="error"
+        className={styles.errorMessage}
+      >
+        {Object.entries(errors).map(([url, error], index) => (
+          <div key={url}>
+            {`${url}: ${getErrorMessage(error)}`}
+            {index < Object.entries(errors).length - 1 && <br />}
+          </div>
+        ))}
+      </Alert>
     </div>
   );
 }

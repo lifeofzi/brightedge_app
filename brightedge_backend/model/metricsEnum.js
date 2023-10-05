@@ -7,4 +7,14 @@ const Metrics = {
     EXPERIMENTAL_TIME_TO_FIRST_BYTE : "experimental_time_to_first_byte"
 }
 
-module.exports = Metrics;
+
+const metricShortNameMapping = {
+    [Metrics.CUMULATIVE_LAYOUT_SHIFT]: "CLS",
+    [Metrics.FIRST_CONTENTFUL_PAINT]: "FCP",
+    [Metrics.FIRST_INPUT_DELAY]: "FID",
+    [Metrics.INTERACTION_TO_NEXT_PAINT]: "INP",
+    [Metrics.LARGEST_CONTENTFUL_PAINT]: "LCP",
+    [Metrics.EXPERIMENTAL_TIME_TO_FIRST_BYTE]: "TTFB",
+};
+
+module.exports = { Metrics, metricShortNameMapping };

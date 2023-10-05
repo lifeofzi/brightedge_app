@@ -1,3 +1,6 @@
+
+const { Metrics, metricShortNameMapping } = require('../model/metricsEnum.js');
+
 const processRawData = (rawData) => {
     let simplifiedData = {
         origin: rawData.record.key.origin,
@@ -5,7 +8,9 @@ const processRawData = (rawData) => {
     };
 
     for (let metric in rawData.record.metrics) {
-        simplifiedData.metrics[metric] = {
+        const shortName = metricShortNameMapping[metric] || metric; // Fallback to the original metric name if a short name is not found
+
+        simplifiedData.metrics[shortName] = {
             p75: rawData.record.metrics[metric].percentilesTimeseries.p75s,
             histogram: rawData.record.metrics[metric].histogramTimeseries
         };

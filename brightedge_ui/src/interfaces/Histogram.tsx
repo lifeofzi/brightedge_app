@@ -1,0 +1,3 @@
+type Histogram = {
+  densities: string[];
+}[];

@@ -3,7 +3,7 @@ import styles from "../css/DataGridComponent.module.css";
 import { useRecoilValue } from "recoil";
 import { tableDataAtom } from "../store/atoms/AtomStates";
 
-const calculateHistogramAverage = (histogram: any) => {
+const calculateHistogramAverage = (histogram: Histogram) => {
   if (histogram && histogram.length > 0) {
     const values = histogram[0].densities.map((density: string) =>
       parseFloat(density)
