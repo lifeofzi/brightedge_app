@@ -1,6 +1,26 @@
 import { useRecoilValue } from "recoil";
 import { urlErrorStateAtom } from "../store/atoms/DataGridState";
 import styles from "../css/ErrorHandlingComponent.module.css";
+import { Alert, AlertTitle } from "@mui/material";
+
+interface AxiosError {
+  response?: {
+    status: number;
+  };
+  message: string;
+}
+
+const getErrorMessage = (error: unknown): string => {
+  const axiosError = error as AxiosError;
+  let errorMessage = axiosError.message; // default to the error message
+
+  // If it's an Axios error with a response status code of 400, customize the message.
+  if (axiosError.response && axiosError.response.status === 400) {
+    errorMessage = "Error querying for invalid url.";
+  }
+
+  return errorMessage;
+};
 
 function ErrorHandlingComponent() {
   const errors = useRecoilValue(urlErrorStateAtom);
@@ -12,9 +32,14 @@ function ErrorHandlingComponent() {
   return (
     <div className={styles.container}>
       {Object.entries(errors).map(([url, error]) => (
-        <p key={url} className={styles.errorMessage}>
-          {`${url}: ${error}`}
-        </p>
+        <Alert
+          key={url}
+          variant="outlined"
+          severity="error"
+          className={styles.errorMessage}
+        >
+          {`${url}: ${getErrorMessage(error)}`}
+        </Alert>
       ))}
     </div>
   );

@@ -1,20 +1,31 @@
-import { TextareaAutosize, Button } from "@mui/material";
+import {
+  TextareaAutosize,
+  Button,
+  CircularProgress,
+  Backdrop,
+} from "@mui/material";
 import axios from "axios";
 import styles from "../css/Searchbar.module.css";
-import { useSetRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilState } from "recoil";
 import {
   tableDataAtom,
   urlErrorStateAtom,
+  backdropOpenStateAtom,
+  textareaContentAtom,
 } from "../store/atoms/DataGridState.tsx";
 
 function Searchbar() {
   const SERVER_ENDPOINT = "http://localhost:3001/cruxdata";
   const setTableData = useSetRecoilState(tableDataAtom);
   const setUrlErrors = useSetRecoilState(urlErrorStateAtom);
-
-  let textareaContent = "";
+  const [open, setOpen] = useRecoilState(backdropOpenStateAtom);
+  const [textareaContent, setTextareaContent] =
+    useRecoilState(textareaContentAtom);
 
   const handleAnalyze = async () => {
+    console.log("analyzing new query");
+    setOpen(true);
+
     // Clearing previous state
     setUrlErrors({});
     setTableData([]);
@@ -24,6 +35,8 @@ function Searchbar() {
         textareaContent.split("\n").filter((url: string) => url.trim() !== "")
       )
     );
+
+    console.log("urls : " + urls);
 
     const fetchData = urls.map(async (url: string) => {
       try {
@@ -52,6 +65,8 @@ function Searchbar() {
         ...res,
       }))
     );
+
+    setOpen(false); // Close the backdrop after analysis
   };
 
   return (
@@ -60,7 +75,7 @@ function Searchbar() {
         minRows={1}
         placeholder="Enter URLs, each on a new line..."
         className={styles.textarea}
-        onChange={(e) => (textareaContent = e.target.value)}
+        onChange={(e) => setTextareaContent(e.target.value)}
       />
 
       <Button
@@ -70,6 +85,13 @@ function Searchbar() {
       >
         Analyze
       </Button>
+
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 }

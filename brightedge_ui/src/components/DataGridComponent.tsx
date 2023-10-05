@@ -14,8 +14,19 @@ const calculateHistogramAverage = (histogram: any) => {
   return 0; // Return 0 if data is missing
 };
 
+const calculateAverageP75 = (p75Array: number[]): number => {
+  // Check if the array is empty or contains non-numeric values
+  if (p75Array.length === 0 || !p75Array.every(Number.isFinite)) {
+    return 0; // or return another default value or null
+  }
+  return (
+    p75Array.reduce((acc: number, value: number) => acc + value, 0) /
+    p75Array.length
+  );
+};
+
 const generateColumns = (data: any): GridColDef[] => {
-  const metricKeys = Object.keys(data.metrics);
+  const metricKeys = Object.keys(data.metrics).sort();
 
   const columns: GridColDef[] = [
     {
@@ -36,14 +47,16 @@ const generateColumns = (data: any): GridColDef[] => {
   ];
 
   metricKeys.forEach((key) => {
-    //Columns for p75
     columns.push({
       field: key,
       headerName: `${key} p75`,
-      width: 150,
+      width: 200,
       sortable: true,
       type: "number", // Ensure the column type is set to number for comparison filtering
-      valueGetter: (params: any) => params.row.metrics[key]?.p75[0],
+      valueGetter: (params: any) => {
+        const p75Array = params.row.metrics[key]?.p75 || [];
+        return calculateAverageP75(p75Array);
+      },
     });
 
     // Columns for Histogram

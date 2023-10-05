@@ -1,7 +1,32 @@
 /* DataGridComponent.module.css */
-
 .dataGridContainer {
     height: 400px;
     width: 100%;
     margin-top: 20px;
+}
+
+/* Additional global styles */
+:global(.MuiDataGrid-columnHeader) {
+    background-color: #c3dfea; 
+    color: #333;
+}
+
+:global(.MuiDataGrid-row) {
+    transition: background-color 0.3s;
+}
+
+:global(.MuiDataGrid-row:hover) {
+    background-color: #b0daeb; 
+}
+
+:global(.MuiDataGrid-row.Mui-selected) {
+    background-color: #adcedf; 
+}
+
+:global(.MuiCheckbox-colorSecondary.Mui-checked) {
+    color: #1976d2; 
+}
+
+:global(.MuiCheckbox-colorSecondary) {
+    color: #90a4ae;
 }
