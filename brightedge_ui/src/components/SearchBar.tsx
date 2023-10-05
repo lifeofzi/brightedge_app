@@ -16,7 +16,10 @@ import {
 import { AxiosError } from "axios";
 
 function Searchbar() {
-  const SERVER_ENDPOINT = "http://localhost:3001/cruxdata";
+  const SERVER_ENDPOINT = `${import.meta.env.VITE_HOST}:${
+    import.meta.env.VITE_PORT
+  }/${import.meta.env.VITE_ENDPOINT}`;
+
   const setTableData = useSetRecoilState(tableDataAtom);
   const setUrlErrors = useSetRecoilState(urlErrorStateAtom);
   const [open, setOpen] = useRecoilState(backdropOpenStateAtom);
