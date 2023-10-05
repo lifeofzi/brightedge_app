@@ -1,6 +1,5 @@
-import "./App.css";
+import "./css/App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./App.css";
 import Appbar from "./components/AppBar.tsx";
 import Searchbar from "./components/SearchBar.tsx";
 import DataGridComponent from "./components/DataGridComponent.tsx";
