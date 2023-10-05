@@ -1,0 +1,18 @@
+/* Appbar.module.css */
+
+.appbar {
+  display: flex;
+  background-color: #009dda; /* Removed quotes */
+  justify-content: space-between;
+  padding: 4px;
+  z-index: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logo {
+  background-color: #009dda;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: block;
+}

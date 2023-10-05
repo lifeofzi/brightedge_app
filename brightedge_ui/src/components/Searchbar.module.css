@@ -1,0 +1,19 @@
+/* Searchbar.module.css */
+
+.container {
+    padding-top: 150px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.textarea {
+    margin-bottom: 10px;
+    width: 500px;
+}
+
+.analyzeButton {
+    background-color: "#009dda";
+}
+
