@@ -12,5 +12,5 @@ sleep 5
 
 # Run `node index.js` in the background and redirect its output to another log file
 cd ..
-cd brightedge_ui
+cd brightedge_backend
 nohup node index.js > index.log 2>&1 &
