@@ -3,14 +3,40 @@ import styles from "../css/DataGridComponent.module.css";
 import { useRecoilValue } from "recoil";
 import { tableDataAtom } from "../store/atoms/DataGridState";
 
+const calculateHistogramAverage = (histogram: any) => {
+  if (histogram && histogram.length > 0) {
+    const values = histogram[0].densities.map((density: string) =>
+      parseFloat(density)
+    );
+    const sum = values.reduce((acc: number, value: number) => acc + value, 0);
+    return sum / values.length;
+  }
+  return 0; // Return 0 if data is missing
+};
+
 const generateColumns = (data: any): GridColDef[] => {
   const metricKeys = Object.keys(data.metrics);
 
   const columns: GridColDef[] = [
-    { field: "origin", headerName: "URL", width: 200, sortable: true },
+    {
+      field: "origin",
+      headerName: "URL",
+      width: 200,
+      sortable: true,
+      renderCell: (params) => (
+        <a
+          href={params.value as string}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {params.value}
+        </a>
+      ),
+    },
   ];
 
   metricKeys.forEach((key) => {
+    //Columns for p75
     columns.push({
       field: key,
       headerName: `${key} p75`,
@@ -26,21 +52,10 @@ const generateColumns = (data: any): GridColDef[] => {
       headerName: `${key} Histogram Avg`,
       width: 200,
       sortable: true,
-      type: "number", // Set the type to number
+      type: "number",
       valueGetter: (params: any) => {
         const histogram = params.row.metrics[key]?.histogram;
-        if (histogram && histogram.length > 0) {
-          // Convert histogram values to numbers and calculate the average
-          const values = histogram[0].densities.map((density: string) =>
-            parseFloat(density)
-          );
-          const sum = values.reduce(
-            (acc: number, value: number) => acc + value,
-            0
-          );
-          return sum / values.length;
-        }
-        return 0; // Return 0 if data is missing
+        return calculateHistogramAverage(histogram);
       },
     });
   });

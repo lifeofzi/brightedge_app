@@ -1,7 +1,7 @@
 import { TextareaAutosize, Button } from "@mui/material";
 import axios from "axios";
 import styles from "../css/Searchbar.module.css";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState } from "recoil";
 import {
   tableDataAtom,
   urlErrorStateAtom,
@@ -11,7 +11,6 @@ function Searchbar() {
   const SERVER_ENDPOINT = "http://localhost:3001/cruxdata";
   const setTableData = useSetRecoilState(tableDataAtom);
   const setUrlErrors = useSetRecoilState(urlErrorStateAtom);
-  //const errors = useRecoilValue(urlErrorStateAtom);
 
   let textareaContent = "";
 
@@ -37,7 +36,7 @@ function Searchbar() {
       } catch (error) {
         setUrlErrors((prevErrors) => ({
           ...prevErrors,
-          [url]: "Failed to fetch data for this URL. Error :" + error,
+          [url]: error,
         }));
         return null;
       }
