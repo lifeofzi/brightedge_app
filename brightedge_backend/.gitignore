@@ -1,0 +1,6 @@
+#Logs
+combined.log
+error.log
+
+#Environment
+.env
