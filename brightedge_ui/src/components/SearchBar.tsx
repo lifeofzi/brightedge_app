@@ -1,9 +1,4 @@
-import {
-  TextareaAutosize,
-  Button,
-  CircularProgress,
-  Backdrop,
-} from "@mui/material";
+import { TextareaAutosize, Button } from "@mui/material";
 import axios from "axios";
 import styles from "../css/Searchbar.module.css";
 import { useSetRecoilState, useRecoilState } from "recoil";
@@ -14,20 +9,18 @@ import {
   textareaContentAtom,
 } from "../store/atoms/AtomStates.tsx";
 import { AxiosError } from "axios";
+import { SERVER_ENDPOINT } from "../config/apiConfig";
+import log from "loglevel";
 
 function Searchbar() {
-  const SERVER_ENDPOINT = `${import.meta.env.VITE_HOST}:${
-    import.meta.env.VITE_PORT
-  }/${import.meta.env.VITE_ENDPOINT}`;
-
   const setTableData = useSetRecoilState(tableDataAtom);
   const setUrlErrors = useSetRecoilState(urlErrorStateAtom);
-  const [open, setOpen] = useRecoilState(backdropOpenStateAtom);
+  const setOpen = useSetRecoilState(backdropOpenStateAtom);
   const [textareaContent, setTextareaContent] =
     useRecoilState(textareaContentAtom);
 
   const handleAnalyze = async () => {
-    console.log("analyzing new query");
+    log.info("Analyzing new query.");
     setOpen(true);
 
     // Clearing previous state
@@ -40,7 +33,7 @@ function Searchbar() {
       )
     );
 
-    console.log("urls : " + urls);
+    log.info("URLs: %s", urls);
 
     const fetchData = urls.map(async (url: string) => {
       try {
@@ -52,6 +45,8 @@ function Searchbar() {
         return response.data;
       } catch (error) {
         const axiosError = error as AxiosError;
+        log.error("URL: %s - Error: %s", url, error);
+
         setUrlErrors((prevErrors) => ({
           ...prevErrors,
           [url]: axiosError,
@@ -82,7 +77,6 @@ function Searchbar() {
         className={styles.textarea}
         onChange={(e) => setTextareaContent(e.target.value)}
       />
-
       <Button
         variant="contained"
         onClick={handleAnalyze}
@@ -90,13 +84,6 @@ function Searchbar() {
       >
         Analyze
       </Button>
-
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
     </div>
   );
 }
