@@ -1,14 +1,8 @@
 import { useRecoilValue } from "recoil";
-import { urlErrorStateAtom } from "../store/atoms/DataGridState";
+import { urlErrorStateAtom } from "../store/atoms/AtomStates";
 import styles from "../css/ErrorHandlingComponent.module.css";
-import { Alert, AlertTitle } from "@mui/material";
-
-interface AxiosError {
-  response?: {
-    status: number;
-  };
-  message: string;
-}
+import { Alert } from "@mui/material";
+import { AxiosError } from "axios";
 
 const getErrorMessage = (error: unknown): string => {
   const axiosError = error as AxiosError;

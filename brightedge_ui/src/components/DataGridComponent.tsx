@@ -1,7 +1,7 @@
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import styles from "../css/DataGridComponent.module.css";
 import { useRecoilValue } from "recoil";
-import { tableDataAtom } from "../store/atoms/DataGridState";
+import { tableDataAtom } from "../store/atoms/AtomStates";
 
 const calculateHistogramAverage = (histogram: any) => {
   if (histogram && histogram.length > 0) {

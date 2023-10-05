@@ -12,7 +12,8 @@ import {
   urlErrorStateAtom,
   backdropOpenStateAtom,
   textareaContentAtom,
-} from "../store/atoms/DataGridState.tsx";
+} from "../store/atoms/AtomStates.tsx";
+import { AxiosError } from "axios";
 
 function Searchbar() {
   const SERVER_ENDPOINT = "http://localhost:3001/cruxdata";
@@ -47,9 +48,10 @@ function Searchbar() {
         });
         return response.data;
       } catch (error) {
+        const axiosError = error as AxiosError;
         setUrlErrors((prevErrors) => ({
           ...prevErrors,
-          [url]: error,
+          [url]: axiosError,
         }));
         return null;
       }
