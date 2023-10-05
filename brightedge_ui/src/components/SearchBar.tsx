@@ -78,7 +78,7 @@ function Searchbar() {
     <div className={styles.container}>
       <TextareaAutosize
         minRows={1}
-        placeholder="Enter URLs, each on a new line..."
+        placeholder="Enter URL(s), each on a new line..."
         className={styles.textarea}
         onChange={(e) => setTextareaContent(e.target.value)}
       />
