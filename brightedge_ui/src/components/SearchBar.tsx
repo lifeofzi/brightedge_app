@@ -1,6 +1,6 @@
 import { TextareaAutosize, Button } from "@mui/material";
 import axios from "axios";
-import styles from "./Searchbar.module.css";
+import styles from "../css/Searchbar.module.css";
 import { useSetRecoilState } from "recoil";
 import { tableDataAtom } from "../store/atoms/DataGridState.tsx";
 
