@@ -1,5 +1,129 @@
 # BrightEdgeAssigment
 
+## Setup
+
+### Initial Setup
+
+1. **Clone the Repository**:
+
+   If you haven't already, clone the BrightEdgeAssigment repository to your local machine or download the zip file and extract it.
+
+   ```bash
+   git clone https://github.com/lifeofzi/brightedge_app.git
+   cd brightedge_app
+   ```
+
+   2. **Install Global Dependencies:**
+
+   Make sure you have Node.js and npm (Node Package Manager) installed. If not, download and install them from Node.js official website.
+
+   3. **Check installations:**
+
+   ```bash
+   node --version
+   npm --version
+   ```
+
+   4. **Set Up Environment:**
+
+   Both the frontend and backend applications might require environment-specific variables. These are typically stored in .env files. You will set these up in the respective "Deploying Backend" and "Deploying Frontend" sections.
+
+### Deploying Backend
+
+Before deploying the backend, ensure you have the necessary environment variables set up in a `.env` file in the `brightedge_backend` directory.
+
+1. **Setting up the API key**:
+
+   To get your `API_KEY`, follow the instructions provided in the [Chrome UX Report API documentation](https://developer.chrome.com/docs/crux/api/). Once you have the key, add it to your `.env` file.
+
+   ```plaintext
+   API_KEY=YOUR_API_KEY_HERE
+   CRUX_API_ENDPOINT=https://chromeuxreport.googleapis.com/v1/records:queryHistoryRecord
+   PORT=3001
+   ```
+
+2. **Deploying the server**:
+
+   Navigate to the backend directory and start the server:
+
+   ```bash
+   cd brightedge_backend
+   node index.js
+   ```
+
+   This will start the frontend development server, typically accessible at (http://localhost:3001)
+
+### Deploying Frontend
+
+Before deploying the frontend, ensure you have the necessary environment variables set up in a `.env` file in the `brightedge_ui` directory.
+
+1. **Setting up configuration**:
+
+   Create or modify the `.env` file in the `brightedge_ui` directory and populate it with the necessary configurations:
+
+   ```plaintext
+   VITE_HOST=http://localhost
+   VITE_PORT=3001
+   VITE_ENDPOINT=cruxdata
+   ```
+
+This will start the frontend development server, typically accessible at (http://localhost:5173)
+
+2. **Navigate to the UI directory**:
+   Navigate to the UI directory and start the app:
+
+   ```bash
+   cd brightedge_ui
+   npm install
+   npm run dev
+   ```
+
+## API Endpoints
+
+The server provides a set of API endpoints to interact with the CrUX data and manage the metrics.
+
+### 1. Fetch CrUX Data
+
+**Endpoint**: `/cruxdata`
+
+**Method**: `GET`
+
+**Parameters**:
+
+- `url`: The target URL for which CrUX data is to be retrieved.
+
+**Description**:
+
+This endpoint fetches and processes the raw CrUX data for the given URL, focusing primarily on metrics such as FCP, LCP, FID, and CLS.
+
+**Usage**:
+
+`GET /cruxdata?url=https://example.com`
+
+### 2. Fetch Metrics Mapping
+
+**Endpoint**: `/metrics`
+
+**Method**: `GET`
+
+**Description**:
+
+This endpoint provides the mapping of metric names to their respective short names.
+
+**Usage**:
+
+`GET /metrics`
+
+### Server Setup
+
+The server uses environment variables for configuration, which can be set in a `.env` file. The key environment variables include:
+
+- `API_KEY`: The key obtained from the Chrome UX Report API.
+- `CRUX_API_ENDPOINT`: The base endpoint for the Chrome UX Report API.
+- `PORT`: The port on which the server runs, defaulting to 3001 if not specified.
+
+The server is set up to handle global unhandled promise rejections and uncaught exceptions, logging them for further analysis and action.
+
 ## Web Performance Metrics Summary
 
 ### Key Metrics:
