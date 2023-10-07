@@ -1,4 +1,4 @@
-# BrightEdgeAssigment
+# BrightEdge Website Analytics Tool
 
 ## Setup
 
